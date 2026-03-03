@@ -4,14 +4,12 @@ from datetime import datetime
 from typing import Optional
 from app.models.user import RoleEnum
 
-# البيانات اللي بنحتاجها لما يوزر جديد يسجل (Register)
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
     full_name: Optional[str] = None
-    role: RoleEnum = RoleEnum.employee  # الديفولت موظف، والمدير بيغيرها لنفسه
+    role: RoleEnum = RoleEnum.employee  
 
-# البيانات اللي بنرجعها لما حد يطلب بيانات يوزر (بنشيل الباسورد طبعاً)
 class UserOut(BaseModel):
     id: UUID
     email: EmailStr
@@ -21,13 +19,12 @@ class UserOut(BaseModel):
     created_at: datetime
 
     class Config:
-        from_attributes = True # عشان Pydantic يعرف يقرأ من الـ SQLAlchemy Model
+        from_attributes = True 
 
-# بيانات الـ Token اللي هترجع بعد الـ Login
 class Token(BaseModel):
     access_token: str
     token_type: str
-    role: str # مهمة جداً للـ Frontend عشان يعرف هو مدير ولا موظف
+    role: str
 
 class TokenData(BaseModel):
     user_id: Optional[str] = None
