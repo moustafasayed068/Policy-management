@@ -12,3 +12,5 @@ pgvector
 python-multipart
 pydantic[email]
 asyncpg
+PyMuPDF
+fitz
