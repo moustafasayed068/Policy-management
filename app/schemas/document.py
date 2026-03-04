@@ -11,6 +11,7 @@ class DocumentOut(BaseModel):
     status: Optional[str] = "processing"
     uploaded_at: datetime
     uploaded_by: Optional[UUID] = None
+    extracted_text: Optional[str] = None  
 
     model_config = ConfigDict(from_attributes=True)
 
