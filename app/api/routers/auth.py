@@ -16,11 +16,11 @@ async def register(user_in: UserCreate, db: AsyncSession = Depends(get_db)):
     user = await user_repo.get_by_email(user_in.email)
     
     if user:
-        raise HTTPException(status_code=400, detail="Email is already exsit")
+        raise HTTPException(status_code=400, detail="Email is already exists")
     
     return await user_repo.create(user_in)
 
-@router.post("/get access token", response_model=Token)
+@router.post("/login", response_model=Token)
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_db)):
     user_repo = UserRepository(db)
     
@@ -29,9 +29,9 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSessi
     if not user or not verify_password(form_data.password, user.password_hash):
         raise HTTPException(status_code=401, detail="Email or password incorrect")
     
-    access_token = create_access_token(subject=user.id, role=user.role)
+    access_token = create_access_token(subject=str(user.id), role=user.role)
     return {"access_token": access_token, "token_type": "bearer", "role": user.role}
 #test case for jwt login
-@router.get("get data")
-async def get(user_id: str = Depends(get_current_user)):
-    return {f'user is' :{user_id}}
+@router.get("/me", response_model=UserOut) # مسار أوضح
+async def get_me(current_user = Depends(get_current_user)):
+    return current_user
