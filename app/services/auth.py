@@ -1,8 +1,10 @@
 from fastapi import HTTPException, status
+from app.models.user import RoleEnum 
 
 def verify_admin_access(user):
-    if user.role not in ["hr", "admin"]:
+    # This function checks if the user has HR or Admin role before allowing access to certain endpoints.
+    if user.role not in [RoleEnum.hr, RoleEnum.admin]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Only HR or admin can perform this action"
+            detail="Forbidden: This action requires HR or Admin privileges."
         )
