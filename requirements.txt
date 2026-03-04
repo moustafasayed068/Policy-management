@@ -9,3 +9,6 @@ bcrypt<4
 cohere
 supabase
 pgvector
+python-multipart
+pydantic[email]
+asyncpg
