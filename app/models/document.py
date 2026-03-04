@@ -10,7 +10,6 @@ class Document(Base):
     filename      = Column(String(255), nullable=False)
     original_name = Column(String(255), nullable=False)
     file_size     = Column(Integer)
-    total_pages   = Column(Integer)
     status        = Column(String(50), default="processing")
     uploaded_at   = Column(DateTime, server_default=func.now())
 
